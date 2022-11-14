@@ -1,7 +1,6 @@
 import path from 'path'
 import Listr from 'listr'
 import execa from 'execa'
-import { projectInstall } from 'pkg-install'
 import { OptionsType } from './types'
 import { setConfig } from './set-config'
 import { setSrc } from './set-src'
@@ -13,15 +12,14 @@ export const create = async (options: OptionsType) => {
     process.exit(1)
   }
   const target = path.resolve(process.cwd(), `${options.name}`)
-  console.log(path.resolve(process.cwd(), `${options.name}`));
   
   const task = new Listr([
     {
-      title: 'Criar arquivos de configurações',
+      title: 'Criando arquivos de configurações',
       task: async () => await setConfig(target, options.name)
     },
     {
-      title: 'Instalar dependências',
+      title: 'Instalando dependências',
       task: async () => await execa('yarn', ['install'], {
         cwd: path.resolve(process.cwd(), `${options.name}`)
       })
@@ -33,11 +31,11 @@ export const create = async (options: OptionsType) => {
       })
     },
     {
-      title: 'Criar estrutura de pastas',
+      title: 'Criando estrutura de pastas',
       task: async () => await setSrc(target)
     },
     {
-      title: 'Criar feature exemplo',
+      title: 'Criando feature exemplo',
       task: async () => await createFeature(target, 'example')
     },
   ])

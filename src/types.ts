@@ -1,6 +1,7 @@
 export type OptionsType = {
-  name: string;
+  name: string
   create: boolean
+  generate: boolean
 }
 
 export type FeatureParams = {
